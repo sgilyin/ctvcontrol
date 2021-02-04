@@ -46,7 +46,7 @@ WHERE tbl_contract.date2 IS NULL AND tbl_contract.fc=0 AND NOT (tbl_contract.gr&
             $query = $query."(tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4<-$param->textDebt OR tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4 IS NULL) AND ";
         }
         $query = $query."(tbl_street.id=$param->street_id AND CONCAT(tbl_house.house, '', tbl_house.frac)='$param->textHouse')
-ORDER BY balance, address
+ORDER BY tbl_flat.flat+0
 LIMIT 1000";
 
         return static::executeQuery($query);

@@ -23,6 +23,7 @@ spl_autoload_register(function ($class) {
 });
 
 if ($_POST){
+    $param = new stdClass();
     $param->textDebt = $_POST['textDebt'] ?? false;
     $param->street_id = $_POST['street_id'] ?? false;
     $param->textHouse = $_POST['textHouse'] ?? false;
