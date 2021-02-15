@@ -41,7 +41,7 @@ LEFT JOIN address_street tbl_street ON (tbl_house.streetid=tbl_street.id)
 LEFT JOIN contract_balance tbl_balance ON (tbl_balance.cid=tbl_contract.id AND (tbl_balance.mm=MONTH(CURDATE()) AND (tbl_balance.yy=YEAR(CURDATE()))))
 LEFT JOIN contract_tariff tbl_tariff ON (tbl_tariff.cid=tbl_contract.id AND tbl_tariff.date2 IS NULL)
 LEFT JOIN tariff_plan tbl_tariff_plan ON (tbl_tariff_plan.id=tbl_tariff.tpid)
-WHERE tbl_contract.date2 IS NULL AND tbl_contract.fc=0 AND NOT (tbl_contract.gr&(1<<3) > 0) AND ";
+WHERE tbl_contract.date2 IS NULL AND NOT (tbl_contract.gr&(1<<3) > 0) AND ";
         if ($param->textDebt){
             $query = $query."(tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4<-$param->textDebt OR tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4 IS NULL) AND ";
         }
