@@ -32,7 +32,9 @@ if ($_POST){
     header( "Content-disposition: attachment; filename=".date('Y-m-d')."-$param->street_id-$param->textHouse-$param->textDebt.xls" );
     echo iconv('UTF-8', 'windows-1251', 'ФИО') . "\t" .
         iconv('UTF-8', 'windows-1251', 'Телефон') . "\t" .
-        iconv('UTF-8', 'windows-1251', 'Адрес') . "\t" .
+        iconv('UTF-8', 'windows-1251', 'Улица') . "\t" .
+        iconv('UTF-8', 'windows-1251', 'Дом') . "\t" .
+        iconv('UTF-8', 'windows-1251', 'Квартира') . "\t" .
         iconv('UTF-8', 'windows-1251', 'Тариф') . "\t" .
         iconv('UTF-8', 'windows-1251', 'Баланс') . "\t" .
         iconv('UTF-8', 'windows-1251', 'Комментарий') . "\n";
@@ -40,7 +42,9 @@ if ($_POST){
             $row = $bgbData->fetch_object();
             echo iconv('UTF-8', 'windows-1251', $row->fio) . "\t" .
                 $row->phone . "\t" .
-                iconv('UTF-8', 'windows-1251', $row->address) . "\t" .
+                iconv('UTF-8', 'windows-1251', $row->street) . "\t" .
+                iconv('UTF-8', 'windows-1251', $row->house) . "\t" .
+                iconv('UTF-8', 'windows-1251', $row->flat) . "\t" .
                 iconv('UTF-8', 'windows-1251', $row->tariff) . "\t" .
                 $row->balance . "\t" .
                 iconv('UTF-8', 'windows-1251', $row->comment) . "\n";

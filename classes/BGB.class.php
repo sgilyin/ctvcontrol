@@ -30,7 +30,10 @@ class BGB {
     }
 
     public static function getData($param) {
-        $query = "SELECT CONCAT(tbl_street.title, ' д. ', tbl_house.house, CONCAT_WS( ' кв. ',tbl_house.frac, IF(tbl_flat.flat='',NULL,tbl_flat.flat))) AS 'address', tbl_phone.val AS 'phone', tbl_fio.val AS 'fio', tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4 AS 'balance', tbl_tariff_plan.title AS 'tariff', tbl_comment.val AS 'comment'
+#        $query = "SELECT CONCAT(tbl_street.title, ' д. ', tbl_house.house, CONCAT_WS( ' кв. ',tbl_house.frac, IF(tbl_flat.flat='',NULL,tbl_flat.flat))) AS 'address', tbl_phone.val AS 'phone', tbl_fio.val AS 'fio', tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4 AS 'balance', tbl_tariff_plan.title AS 'tariff', tbl_comment.val AS 'comment'
+
+        $query = "
+SELECT tbl_street.title AS 'street', CONCAT(tbl_house.house, '', tbl_house.frac) AS 'house', IF(tbl_flat.flat='',NULL,tbl_flat.flat) AS 'flat', tbl_phone.val AS 'phone', tbl_fio.val AS 'fio', tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4 AS 'balance', tbl_tariff_plan.title AS 'tariff', tbl_comment.val AS 'comment'
 FROM contract tbl_contract
 LEFT JOIN contract_parameter_type_1 tbl_phone ON (tbl_contract.id=tbl_phone.cid) AND (tbl_phone.pid=2)
 LEFT JOIN contract_parameter_type_1 tbl_fio ON (tbl_contract.id=tbl_fio.cid) AND (tbl_fio.pid=1)
@@ -41,7 +44,8 @@ LEFT JOIN address_street tbl_street ON (tbl_house.streetid=tbl_street.id)
 LEFT JOIN contract_balance tbl_balance ON (tbl_balance.cid=tbl_contract.id AND (tbl_balance.mm=MONTH(CURDATE()) AND (tbl_balance.yy=YEAR(CURDATE()))))
 LEFT JOIN contract_tariff tbl_tariff ON (tbl_tariff.cid=tbl_contract.id AND tbl_tariff.date2 IS NULL)
 LEFT JOIN tariff_plan tbl_tariff_plan ON (tbl_tariff_plan.id=tbl_tariff.tpid)
-WHERE tbl_contract.date2 IS NULL AND NOT (tbl_contract.gr&(1<<3) > 0) AND ";
+WHERE tbl_contract.date2 IS NULL AND NOT (tbl_contract.gr&(1<<3) > 0) AND 
+";
         if ($param->textDebt){
             $query = $query."(tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4<-$param->textDebt OR tbl_balance.summa1+tbl_balance.summa2-tbl_balance.summa3-tbl_balance.summa4 IS NULL) AND ";
         }
